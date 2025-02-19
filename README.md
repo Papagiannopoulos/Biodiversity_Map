@@ -2,7 +2,7 @@
 
 #### Aim: Build a Shiny app that visualizes Poland’s observed species on the map and their frequency.
 
-Description: The data were used was biodiversity dataset from the Global Biodiversity Information Facility (available here). After loading the data (line: 14), the first step was to perform data processing were:
+Description: The data were used was biodiversity dataset from the [Global Biodiversity Information Facility](https://www.gbif.org/dataset/search?q=) (available [here](https://drive.google.com/file/d/1l1ymMg-K_xLriFv1b8MgddH851d6n2sU/view)). After loading the data (line: 14), the first step was to perform data processing were:
 1)	Removed extra rows with the same scientific name, latitudes, longitudes and event date (lines: 18-19).
 2)	Kept only necessary features (line: 20).
 3)	Replaced missing values of Vernacular Name and Kingdom with informative string values (line: 23-34).
