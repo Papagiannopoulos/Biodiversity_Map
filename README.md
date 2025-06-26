@@ -8,11 +8,11 @@ The purpose of this repository is **solely** to explore and become familiar with
 
 ### Table of Contents
 1. 🔍 **[ Dataset](#dataset)** - Data source
-2. 🧹 **[ Data Processing](#data-processing)** - Cleaning and feature engineering
-3. 📊 **[ Shiny App](#Shiny-app)** - App description of functionality
-4. ▶️ **[ Executing the Application](#Executing-the-Application)** - App execution
-5. 🔁 **[ Reproducibility](#Reproducibility)** - Reproducibility steps
-6. 📦 **[ Requirements](#Requirements)** - Install dependencies
+2. 🧹 **[ Data Processing](#-data-processing)** - Cleaning and feature engineering
+3. 📊 **[ Shiny App](#-shiny-app)** - App description of functionality
+4. ▶️ **[ Executing the Application](#-executing-the-Application)** - App execution
+5. 🔁 **[ Reproducibility](#-reproducibility)** - Reproducibility steps
+6. 📦 **[ Requirements](#-requirements)** - Install dependencies
 
 ## 🔍 Dataset 
 GBIF — the [🌐 Global Biodiversity Information Facility](https://www.gbif.org/dataset/search?q=) —  
