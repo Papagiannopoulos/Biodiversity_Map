@@ -7,10 +7,10 @@ The purpose of this repository is **solely** to explore and become familiar with
 ## Project Structure
 
 ### Table of Contents
-1. 🔍 **[ Dataset](#dataset)** - Data source
+1. 🔍 **[ Dataset](#-dataset)** - Data source
 2. 🧹 **[ Data Processing](#-data-processing)** - Cleaning and feature engineering
 3. 📊 **[ Shiny App](#-shiny-app)** - App description of functionality
-4. ▶️ **[ Executing the Application](#-executing-the-Application)** - App execution
+4. ▶️ **[ Executing the Application](#-executing-the-application)** - App execution
 5. 🔁 **[ Reproducibility](#-reproducibility)** - Reproducibility steps
 6. 📦 **[ Requirements](#-requirements)** - Install dependencies
 
