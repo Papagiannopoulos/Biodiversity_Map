@@ -1,22 +1,61 @@
-## R Shiny - Biodiversity dashboard assignment (2021) 
+# R Shiny - Biodiversity dashboard (2021) 
 
-#### Aim: Build a Shiny app that visualizes Poland’s observed species on the map and their frequency.
+Aim: Build a Shiny app that visualizes Poland’s observed species on the map and their frequency.
+The purpose of this repository is **solely** to explore and become familiar with R Shiny and its functionality.  
+No scientific insights or conclusions are provided.
 
-Description: The data were used was biodiversity dataset from the [Global Biodiversity Information Facility](https://www.gbif.org/dataset/search?q=) (available [here](https://drive.google.com/file/d/1l1ymMg-K_xLriFv1b8MgddH851d6n2sU/view)). After loading the data (line: 14), the first step was to perform data processing were:
-1)	Removed extra rows with the same scientific name, latitudes, longitudes and event date (lines: 18-19).
-2)	Kept only necessary features (line: 20).
-3)	Replaced missing values of Vernacular Name and Kingdom with informative string values (line: 23-34).
-4)	Performed feature engineering (line: 25-27).
-5)	Created necessary values for the shinyapp (lines: 29-31). 
+## Project Structure
 
-The second step was to create the app using Shiny package.
-First, tab will visualize an interactive map, while the second tab should give a brief description for every species selection regarding their timelines, counts, locations and event dates. In both tabs will be three search bars (Two with Scientific and Vernacular name search; One with location search).
-Users should be able to search for species by their Vernacular Name and Scientific Name, while description table should react with the correspoding location search. Search field should return matching names and after selection the app displays its observations on the map (first tab) giving a brief description (second tab).
+### Table of Contents
+1. **[ Dataset](#dataset)** - Data source
+2. **[ Data Processing](#data-processing)** - Cleaning and feature engineering
+3. **[ Shiny App](#Shiny-app)** - App description of functionality
+4. **[ Executing the Application](#Executing-the-Application)** - App execution
+5. **[ Requirements](#requirements)** - Install dependencies
 
-Classical figures were constructed using “ggplot” and the interactive map using “mapview” package. All analysis were performed using R version 4.4.1 (2024-06-14 ucrt) in Windows environment.
+## Dataset 
+GBIF—the [Global Biodiversity Information Facility](https://www.gbif.org/dataset/search?q=)—is an international network and data infrastructure, aimed at providing open access on biodiversity data globally.
+- [*Source*](https://drive.google.com/file/d/1l1ymMg-K_xLriFv1b8MgddH851d6n2sU/view))
 
-#### Executing program
-The code exists on github (Papagiannopoulos/Biodiversity_data) while the app is in the shinyapps.io (https://cpapagiannopoulos.shinyapps.io/Poland_biodiversity/ ).
+## Data Processing
+1. **Data Cleaning**:  
+- Removed duplicate rows (identical scientific name, latitude, longitude, and event date)
+- handled missing values
+- clean string features and remove unnecessary features  
+2. **Feature Engineering**: Created vectors for the shinyapp
+ 
+## Shiny app
+
+## Description of Functionality
+
+### First Tab: Interactive Map
+The first tab displays an interactive map displaying the geographical distribution of various species across Poland,
+allowing users to explore biodiversity patterns spatially.  
+Users can search for species using their Scientific Name or Vernacular Name.  
+After selecting a species, the map displays its observation points along with detailed location information.
+
+### Second Tab: Species Summary
+Users can select specific species by either their Scientific Name or Vernacular Name to view a brief description, including:  
+- scientific and vernacular names
+- Observation timelines
+- Occurrences
+- Locations
+- Event dates
+- Associated kingdom
+- urls for deeper information  
+Additionally:  
+A summary table provides a location-specific detailed information on these attributes for the selected species.  
+A small map of Poland highlights species observations, with dot sizes proportional to the count of occurrences.  
+A time plot illustrates how the total number of occurrences varies over time.
+
+## Executing the Application
+The app is hosted on [shinyapps.io](https://cpapagiannopoulos.shinyapps.io/Poland_biodiversity/) 
 
 #### Reproducibility
-Users who would like to rerun the process should download the code and biodiversity data. Then should align the code with the path where the biodiversity data exists in their folders. Finally, install every package that weren’t before and run the code.
+- Clone the repo and download the [biodiversity data](https://drive.google.com/file/d/1l1ymMg-K_xLriFv1b8MgddH851d6n2sU/view)  
+- Align the code with the path where the biodiversity data exists  
+- Run the requirements.R
+
+## Requirements
+Before running the Shiny app.R, run the requirements script to install all necessary libraries  
+R version: 4.4.1 (2024-06-14 ucrt)

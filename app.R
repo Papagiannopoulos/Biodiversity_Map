@@ -2,23 +2,22 @@
 #Sys.setenv(LANG = "en")
 #Sys.setlocale("LC_TIME", "English")
 #Libraries
-library(shiny); library(shinyWidgets); #library(shinydashboard); 
-library(shinythemes); library(leaflet); #library(shinyjs); 
-library(maps); #library(mapproj)
+library(shiny); library(shinyWidgets)
+library(shinythemes); library(leaflet) 
+library(maps);
 library(readxl); library(dplyr)
 library(stringr); library(ggplot2)
-library(mapview); #library(sf);
-#library(countrycode)
+library(mapview);
 
 #Import data
 PL <- read_excel("Poland.xlsx")
 
 ##Data Processing
-#To skip time avoid noise - Remove rows with same Scientific Name lat-long and event date
+# To save time and reduce noise, remove rows with identical Scientific Name, latitude-longitude, and event date
 PL$key <- paste0(PL$scientificName,":",PL$latitudeDecimal,":",PL$longitudeDecimal,":",PL$eventDate)
 PL <- PL[!duplicated(PL$key),]
-PL <- PL[,match(c("id","occurrenceID", "scientificName", "vernacularName", "country","individualCount","lifeStage","kingdom",
-                  "sex","longitudeDecimal","latitudeDecimal", "locality","eventDate"), names(PL))]
+PL <- PL %>% select(id,occurrenceID, scientificName, vernacularName, country,individualCount,lifeStage,kingdom,
+                    sex,longitudeDecimal,latitudeDecimal,locality,eventDate)
 
 PL$vernacularName[is.na(PL$vernacularName)] <- paste0("No Vernacular Name Info ", PL$scientificName[is.na(PL$vernacularName)])
 PL$kingdom[is.na(PL$kingdom)] <- "Uknown"
@@ -33,15 +32,14 @@ locations_init <- unique(sort(PL$locality))
 #Create descriptive table for Shiny
 data <- PL %>% group_by(locality,scientificName) %>% summarise("Vernacular Name" = unique(vernacularName),
                                                                "First Observed Date" = format(min(eventDate),"%d-%b-%Y"), "Last Observed Day" = format(max(eventDate),"%d-%b-%Y"),
-                                                       "Minimun Observed Count" = min(individualCount), "Max Observed Count" = max(individualCount),
-                                                       Kingdom = unique(kingdom))
+                                                               "Minimun Observed Count" = min(individualCount), "Max Observed Count" = max(individualCount),
+                                                               Kingdom = unique(kingdom))
 #Create World Map
 wmap <- map_data("world")
 wmap <- wmap[wmap$region %in% "Poland",] 
-#wmap <- read.csv("wmap_poland.csv")
 worldplot <- ggplot()+
-  geom_polygon(data=wmap, aes(x=long, y=lat, group = group), fill = "lightblue3")+
-  coord_fixed(1.3)
+             geom_polygon(data=wmap, aes(x=long, y=lat, group = group), fill = "lightblue3")+
+             coord_fixed(1.3)
 
 #Create Shinny App
 #Frontend
@@ -71,12 +69,11 @@ ui <- fluidPage(theme = shinytheme("united"),
               )
     )
 )
-#fluidRow(tabsetPanel(tabPanel("Map",plotOutput("Map"),textOutput("text")),tabPanel("Time Series", plotOutput("TimeLines"))))
 
 #Back-end
 server <- function(input, output, session){
   
-  #update name search methods (for figures) Scientific Name
+  # Update search methods for figures based on Scientific Name
   observeEvent(input$scientificName,{
     choice1 <- unique(PL$vernacularName[PL$scientificName %in% input$scientificName])
     updatePickerInput(session=session,
@@ -85,7 +82,7 @@ server <- function(input, output, session){
                       selected = choice1[1], clearOptions=F)
   }, ignoreInit = T, ignoreNULL = FALSE)
   
-  #update name search methods (for figures) Vernacular
+  # Update search methods for figures based on Vernacular Name
   observeEvent(input$vernacularName,{
     choice1 <- unique(PL$scientificName[PL$vernacularName %in% input$vernacularName])
     updatePickerInput(session=session,
@@ -94,7 +91,7 @@ server <- function(input, output, session){
                       selected = choice1[1], clearOptions=F)
   }, ignoreInit = T, ignoreNULL = FALSE)
   
-  #update name search methods (for Table)
+  # Update search methods for Table
   observeEvent(input$scientificName,{
     choice1 <- unique(PL$locality[PL$scientificName %in% input$scientificName])
     updatePickerInput(session=session,
@@ -105,21 +102,19 @@ server <- function(input, output, session){
   
   R1 <- reactive({list(input$scientificName)})
   
-  #Head foot of Interactive map
+  # Head foot of Interactive map
   output$headfoot_dynamic_map <- renderUI({
     tagList(unique(PL$country),"'s map presenting observed species from ",format(min(PL$eventDate),"%d-%b-%Y"),
             " to ", format(max(PL$eventDate),"%d-%b-%Y"),".",br(),
             "Data are from ",a("Global Biodiversity Information Facility.", href = "https://www.gbif.org/"),
             br(), br())
   }) 
-  #Interactive Map Plot
+  # Interactive Map Plot
   observeEvent(R1(), {
     PL_temp <- PL[(PL$scientificName %in% input$scientificName),]
     
     output$dynamic_map <- renderLeaflet({
-      map <- mapview(PL_temp, xcol = "longitudeDecimal", ycol = "latitudeDecimal", crs = 4326, grid = FALSE, alpha = 0.5, zcol = "individualCount",
-              color = "black", #col.regions = "pink", 
-              legend = T,#at = unique(c(seq(0,10,5),seq(0,100,25),seq(0,10^3, 500), seq(0,10^4, 5000))), 
+      map <- mapview(PL_temp, xcol = "longitudeDecimal", ycol = "latitudeDecimal", crs = 4326, grid = FALSE, alpha = 0.5, zcol = "individualCount", color = "black", legend = T,
               map.types = mapviewGetOption("basemaps")[c(3,1,2,4,5)], layer.name = "Number of Counts")
       map@map
       #mapview2leaflet(map@map)
@@ -130,8 +125,7 @@ server <- function(input, output, session){
   observeEvent(R1(), {
     PL_temp <- PL[(PL$scientificName %in% input$scientificName),]
     output$small_map <- renderPlot({
-      worldplot + geom_point(data = PL_temp, aes(x = longitudeDecimal, y = latitudeDecimal,
-                                                 size = individualCount),#, color = locality),
+      worldplot + geom_point(data = PL_temp, aes(x = longitudeDecimal, y = latitudeDecimal, size = individualCount),
                              color = "red") + theme_void() +labs(size = "Counts")
     })
   })
@@ -194,4 +188,3 @@ server <- function(input, output, session){
 
 #Run App
 shinyApp(ui = ui, server = server)
-                       
