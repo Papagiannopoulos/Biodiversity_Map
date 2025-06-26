@@ -33,7 +33,7 @@ is an international network and data infrastructure, aimed at providing open acc
 #### First Tab: Interactive Map
 <img src="images/example_tab1.PNG" alt="My Image" width="1000" height="400"/>  
 
-The first tab displays an interactive map displaying the geographical distribution of various species across Poland,
+The first tab shows an interactive map displaying the geographical distribution of various species across Poland,
 allowing users to explore biodiversity patterns spatially.  
 Users can search for species using their Scientific Name or Vernacular Name.  
 After selecting a species, the map displays its observation points along with detailed location information.
@@ -41,7 +41,7 @@ After selecting a species, the map displays its observation points along with de
 #### Second Tab: Species Summary
 <img src="images/example_tab2.PNG" alt="My Image" width="1000" height="400"/>  
 
-Users can select specific species by either their Scientific Name or Vernacular Name to view a brief description, including:  
+Users can select specific species by either their Scientific Name or Vernacular Name to view a brief text description, including:  
 - Scientific and vernacular names
 - Observation timelines
 - Occurrences
